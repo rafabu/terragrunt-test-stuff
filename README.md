@@ -11,17 +11,17 @@ network connectivity or other infrastructure required.
 
 run the test as follows:
 
-`
+``` bash
 cd ./get_original_terragrunt_dir/
 
 terragrunt run apply --all
-`
+```
 
 ### Expected Behaviour (pre v0.99.4)
 
 terragrunt will happily run the entire implicit stack which generates just a few silly terraform outputs.
 
-`
+``` txt
 
 [terragrunt_implicit_stack\children\unit_03] terraform:
 [terragrunt_implicit_stack\children\unit_03] terraform: Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
@@ -33,13 +33,13 @@ terragrunt will happily run the entire implicit stack which generates just a few
 [terragrunt_implicit_stack\children\unit_03] terraform: terraform_version = "1.14.5"
 [terragrunt_implicit_stack\children\unit_03] terraform: terragrunt_version = "0.99.3"
 
-`
+```
 
 ### Error Behaviour (v0.99.4)
 
 terragrunt fails as it can no longer evaluate the dependency statements of terragrunt_common unit_02 and unit_03 which in turn makes the root_common.hcl read_terragrunt_config fail.
 
-`
+``` txt
 
 ERROR  Error: Error in function call
 ERROR    on ./get_original_terragrunt_dir/terragrunt_common/root-common.hcl line 8, in locals:
@@ -77,7 +77,7 @@ error occurred:
 
 ERROR  Unable to determine underlying exit code, so Terragrunt will exit with error code 1
 
-`
+```
 
 ### Analysis
 
@@ -92,9 +92,8 @@ So far I was not able to find any workaround :-(
 
 Analysing things with `terragrunt render` actually broke with `v0.98.0` already. While this works with v0.97.2 and earlier:
 
-`
+``` bash
 terragrunt render --all 
-`
+```
 
-it will fail with >= v0.98.0 
-
+it will fail with >= v0.98.0
