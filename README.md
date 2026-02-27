@@ -1,2 +1,2 @@
 # terragrunt-test-stuff
-just a few test cases arounf terragrunt
+just a few test cases for terragrunt
