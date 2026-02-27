@@ -86,7 +86,15 @@ In conjunction with loading the config as well in root_common.hcl  using read_te
 
 The latter is used in production to support various, partly legacy unit gimmicks. Near impossible to refactor so it hurts that the behaviour of get_original_terragrunt_dir() has changed.
 
-So far I was not able to find any workaround :-(
+So far I was not able to find any workaround other than running each unit independently (which isn't really the main purpose of terragrunt stacks):
+
+``` bash
+
+terragrunt run apply --working-dir ./terragrunt_implicit_stack/grandparents/unit_01/
+terragrunt run apply --working-dir ./terragrunt_implicit_stack/parents/unit_02/
+terragrunt run apply --working-dir ./terragrunt_implicit_stack/children/unit_03/
+
+```
 
 #### Side note on terragrunt render
 
