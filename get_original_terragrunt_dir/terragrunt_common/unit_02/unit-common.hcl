@@ -5,7 +5,6 @@ dependency "unit_01" {
   # we needed get_original_terragrunt_dir() as get_terragrunt_dir()) does not
   #     return the path or the original terragrunt.hcl unit file
   config_path = format("%s/../../grandparents/unit_01", get_original_terragrunt_dir())
-  # config_path = format("%s/../../grandparents/unit_01", get_terragrunt_dir())
 
   mock_outputs = {
     pet_parent         = ""
@@ -30,4 +29,6 @@ inputs = {
   unit_02_common_get_repo_root               = get_repo_root()
 
   unit_02_common_dependency_unit_01_output = dependency.unit_01.outputs
+
+  unit_02_dependency_unit_01_config_path = format("%s/../../grandparents/unit_01", get_terragrunt_dir())
 }

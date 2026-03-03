@@ -22,6 +22,26 @@ variable "pet_grandparent" {
   default = ""
 }
 
+variable "root_common_tg_locals_merged" {
+  type    = map(any)
+  default = {}
+}
+
+variable "unit_common_file_path" {
+  type    = string
+  default = ""
+}
+
+variable "unit_02_dependency_unit_01_config_path" {
+  type    = string
+  default = ""
+}
+
+variable "unit_03_dependency_unit_02_config_path" {
+  type    = string
+  default = ""
+}
+
 
 resource "terraform_data" "versions" {
   input = {
@@ -57,4 +77,20 @@ output "pet_grandparent" {
 
 output "pet_name" {
   value = random_pet.this.id
+}
+
+output "root_common_tg_locals_merged" {
+  value = var.root_common_tg_locals_merged
+}
+
+output "unit_common_file_path" {
+  value = var.unit_common_file_path
+}
+
+output "unit_02_dependency_unit_01_config_path" {
+  value = var.unit_02_dependency_unit_01_config_path
+}
+
+output "unit_03_dependency_unit_02_config_path" {
+  value = var.unit_03_dependency_unit_02_config_path
 }

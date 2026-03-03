@@ -1,5 +1,4 @@
 locals {
-
   # due to legacy requirements, build a merged config of the locals, allowing
   #     to set certain defaults here at the root-common.hcl instead of the indifidual unit's terragrunt.hcl files
   root_tg = read_terragrunt_config(format("%s/../../root.hcl", get_terragrunt_dir()))
@@ -63,4 +62,10 @@ inputs = {
   root_common_get_repo_root               = get_repo_root()
 
   root_common_tg_locals_merged = local.merged_tg_locals
+
+  unit_common_file_path = format(
+    "%s/get_original_terragrunt_dir/terragrunt_common/%s/unit-common.hcl",
+    get_repo_root(),
+    regexall("^.*/(.+?)$", get_terragrunt_dir())[0][0]
+  )
 }
