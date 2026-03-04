@@ -18,7 +18,7 @@ include "level" {
 }
 
 include "unit-common" {
-  path           = format("%s/get_original_terragrunt_dir/terragrunt_common/%s/unit-common.hcl", get_repo_root(), regexall("^.*/(.+?)$", get_terragrunt_dir())[0][0])
+  path           = format("%s/get_original_terragrunt_dir/terragrunt_common/%s/unit-common.hcl", get_repo_root(), basename(get_terragrunt_dir()))
   expose         = false
   merge_strategy = "deep"
 }

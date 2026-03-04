@@ -7,7 +7,7 @@ locals {
   unit_common_tg = read_terragrunt_config(format(
     "%s/get_original_terragrunt_dir/terragrunt_common/%s/unit-common.hcl",
     get_repo_root(),
-    regexall("^.*/(.+?)$", get_terragrunt_dir())[0][0]
+    basename(get_terragrunt_dir())
   ))
 
   merged_tg_locals = merge(
@@ -17,7 +17,7 @@ locals {
   )
 
   # get versions of both terragrunt anf terraform for dummy module output
-  terragrunt_version = try(regexall("[0-9]+\\.[0-9]+\\.[0-9]+$", trimspace(
+  terragrunt_version = try(regexall("[0-9]+\\.[0-9]+\\.[0-9]+.*$", trimspace(
     run_cmd(
       "--terragrunt-quiet",
       "terragrunt",
@@ -45,7 +45,8 @@ generate "backend_local" {
   contents  = <<-EOF
   terraform {
     backend "local" {
-      path = "${get_terragrunt_dir()}/terraform.tfstate"
+      # replace here is for v1.0.0 compatibility (on Windows, double quotes are needed)
+      path = "${replace(get_terragrunt_dir(), "\\", "\\\\")}/terraform.tfstate"
     }
   }
   EOF
@@ -66,6 +67,6 @@ inputs = {
   unit_common_file_path = format(
     "%s/get_original_terragrunt_dir/terragrunt_common/%s/unit-common.hcl",
     get_repo_root(),
-    regexall("^.*/(.+?)$", get_terragrunt_dir())[0][0]
+    basename(get_terragrunt_dir())
   )
 }
