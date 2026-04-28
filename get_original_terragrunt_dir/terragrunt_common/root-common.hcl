@@ -1,13 +1,13 @@
 locals {
   # due to legacy requirements, build a merged config of the locals, allowing
-  #     to set certain defaults here at the root-common.hcl instead of the indifidual unit's terragrunt.hcl files
-  root_tg = read_terragrunt_config(format("%s/../../root.hcl", get_terragrunt_dir()))
+  #     to set certain defaults here at the root-common.hcl instead of the individual unit's terragrunt.hcl files
+  root_tg = read_terragrunt_config(format("%s/../../root.hcl", replace(get_terragrunt_dir(), "\\", "/")))
   # root_tg = read_terragrunt_config(find_in_parent_folders("root.hcl"), {inputs = {}})
-  level_tg = read_terragrunt_config(format("%s/../level.hcl", get_terragrunt_dir()))
+  level_tg = read_terragrunt_config(format("%s/../level.hcl", replace(get_terragrunt_dir(), "\\", "/")))
   unit_common_tg = read_terragrunt_config(format(
     "%s/get_original_terragrunt_dir/terragrunt_common/%s/unit-common.hcl",
-    get_repo_root(),
-    basename(get_terragrunt_dir())
+    replace(get_repo_root(), "\\", "/"),
+    basename(replace(get_terragrunt_dir(), "\\", "/"))
   ))
 
   merged_tg_locals = merge(
@@ -35,7 +35,7 @@ locals {
 }
 
 terraform {
-  source = format("%s/get_original_terragrunt_dir/terraform_module", get_repo_root())
+  source = format("%s/get_original_terragrunt_dir/terraform_module", replace(get_repo_root(), "\\", "/"))
 }
 
 # defined local backend for each unit (otherwise dependency reads fail)
@@ -46,7 +46,7 @@ generate "backend_local" {
   terraform {
     backend "local" {
       # replace here is for v1.0.0 compatibility (on Windows, double quotes are needed)
-      path = "${replace(get_terragrunt_dir(), "\\", "\\\\")}/terraform.tfstate"
+      path = "${replace(get_terragrunt_dir(), "\\", "/")}/terraform.tfstate"
     }
   }
   EOF
@@ -66,7 +66,7 @@ inputs = {
 
   unit_common_file_path = format(
     "%s/get_original_terragrunt_dir/terragrunt_common/%s/unit-common.hcl",
-    get_repo_root(),
-    basename(get_terragrunt_dir())
+    replace(get_repo_root(), "\\", "/"),
+    basename(replace(get_terragrunt_dir(), "\\", "/"))
   )
 }
