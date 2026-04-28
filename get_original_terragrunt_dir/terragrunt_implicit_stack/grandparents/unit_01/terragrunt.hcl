@@ -25,8 +25,11 @@ include "unit-common" {
 
 inputs = {
   ### for verification using "terragrunt render"
-
   unit_01_get_original_terragrunt_dir = get_original_terragrunt_dir()
-  unit_01_get_terragrunt_dir          = get_terragrunt_dir()
+  unit_01_get_parent_terragrunt_dir   = get_parent_terragrunt_dir("root")
+  unit_01_get_path_from_repo_root     = get_path_from_repo_root()
+  unit_01_get_path_to_repo_root       = get_path_to_repo_root()
   unit_01_get_repo_root               = get_repo_root()
+  unit_01_get_terragrunt_dir          = get_terragrunt_dir()
+  unit_01_get_working_dir             = get_working_dir()
 }
