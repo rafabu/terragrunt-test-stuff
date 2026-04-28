@@ -45,7 +45,6 @@ generate "backend_local" {
   contents  = <<-EOF
   terraform {
     backend "local" {
-      # replace here is for v1.0.0 compatibility (on Windows, double quotes are needed)
       path = "${replace(get_terragrunt_dir(), "\\", "/")}/terraform.tfstate"
     }
   }
